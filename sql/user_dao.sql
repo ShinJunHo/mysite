@@ -7,6 +7,8 @@ values ( member_no_seq.nextval, '안대혁', 'kickscar@gmail.com', '1234', 'male
 -- commit
 commit;
 
+select * from member;
+
 -- login
 select no, name, email
   from member

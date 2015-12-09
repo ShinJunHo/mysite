@@ -1,4 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.hanains.mysite.dao.GuestBookDao" %>
+<%@ page import="com.hanains.mysite.vo.GuestBookVo" %>
+<%
+	//object to down casting
+	List<GuestBookVo> list = (List<GuestBookVo>)request.getAttribute("list");
+%>
 <!doctype html>
 <html>
 <head>
@@ -8,16 +15,7 @@
 </head>
 <body>
 	<div id="container">
-		<div id="header">
-			<h1>MySite</h1>
-			<ul>
-				<li><a href="">로그인</a><li>
-				<li><a href="">회원가입</a><li>
-				<li><a href="">회원정보수정</a><li>
-				<li><a href="">로그아웃</a><li>
-				<li>님 안녕하세요 ^^;</li>
-			</ul>
-		</div>
+		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 		<div id="content">
 			<div id="guestbook">
 				<form action="/mysite/guestbook" method="post">
@@ -35,7 +33,29 @@
 						</tr>
 					</table>
 				</form>
-				<ul>
+				
+				<%
+					int countTotal=list.size();
+					int i=0;
+					for(GuestBookVo vo : list){
+				%>
+				<br>
+				<table width=510 border=1>
+					<tr>
+						<td><%=countTotal-(i++)%></td>
+						<td><%=vo.getName() %></td>
+						<td><%=vo.getReg_date() %></td>
+						<td><a href="/mysite/guestbook?a=deleteform&id=<%=vo.getNo()%>">삭제</a></td>
+					</tr>
+					<tr>
+						<td colspan=4><%=vo.getMessage().replaceAll("\n", "<br/>") %></td>
+					</tr>
+				</table>
+				<%
+				}
+				
+				%>
+				<!--  <ul>
 					<li>
 						<table>
 							<tr>
@@ -53,19 +73,11 @@
 						</table>
 						<br>
 					</li>
-				</ul>
+				</ul>-->
 			</div>
 		</div>
-		<div id="navigation">
-			<ul>
-				<li><a href="">안대혁</a></li>
-				<li><a href="">방명록</a></li>
-				<li><a href="">게시판</a></li>
-			</ul>
-		</div>
-		<div id="footer">
-			<p>(c)opyright 2014 </p>
-		</div>
+		<jsp:include page="/WEB-INF/views/include/navigation.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 	</div>
 </body>
 </html>

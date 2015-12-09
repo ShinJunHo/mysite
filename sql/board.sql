@@ -11,6 +11,8 @@ view_cnt     NUMBER(10),
 reg_date     DATE NOT NULL
 ) ;
 
+
+
 ALTER TABLE board
 ADD ( CONSTRAINT board_no_pk PRIMARY KEY ( no ) );
 
