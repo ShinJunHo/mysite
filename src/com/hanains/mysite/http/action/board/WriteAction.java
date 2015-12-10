@@ -16,14 +16,7 @@ public class WriteAction implements Action {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//HttpUtil.redirect(response, url);
-		
-		
 		//글을 쓸때 로그인 같은걸 고려해야겠다.
-		
-		
-		
-		
-		
 		//HttpUtil.redirect(response, "/mysite/board");
 		HttpUtil.forwarding(request,response,"/WEB-INF/views/board/write.jsp");
 	}

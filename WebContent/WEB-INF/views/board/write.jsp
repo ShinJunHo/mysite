@@ -14,6 +14,7 @@
 				<form class="board-form" method="post" action="/mysite/board">
 					<!-- hidden value가 원래는 write였음. -->
 					<input type = "hidden" name = "a" value="insert">
+					<input type= "hidden" name="id" value="${authUser.no}">
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글쓰기</th>
