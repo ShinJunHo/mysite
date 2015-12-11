@@ -25,6 +25,19 @@ public class ListAction implements Action {
 		BoardDao dao = new BoardDao();
 		List<BoardListVo> list = dao.getList();
 		
+		
+		/**
+		 * 페이징.
+		 * http://blog.naver.com/wldud_0729/150015317564
+		 * */
+		
+		
+		
+		
+		
+		
+		
+		
 		request.setAttribute("list", list);
 		HttpUtil.forwarding(request, response, "/WEB-INF/views/board/list.jsp");
 	}

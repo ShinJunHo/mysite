@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.hanains.http.HttpUtil;
 import com.hanains.http.action.Action;
+import com.hanains.mysite.dao.BoardDao;
+import com.hanains.mysite.vo.BoardVo;
 
 public class ModifyAction implements Action {
 
@@ -16,8 +18,12 @@ public class ModifyAction implements Action {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		//여기서 무슨 작업이 선처리 되어야 할까?.
+		BoardDao dao = new BoardDao();
+		Long no = Long.parseLong(request.getParameter("no"));
+		BoardVo vo = dao.getView(no);
 		
+		request.setAttribute("board",vo);
+		System.out.println(vo);
 		HttpUtil.forwarding(request, response, "/WEB-INF/views/board/modify.jsp");
 	}
 

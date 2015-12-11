@@ -42,7 +42,7 @@
 									<td>${vo.name }</td>
 									<td>${vo.view_cnt}</td>
 									<td>${vo.reg_date}</td>
-									<td><a href="" class="del">삭제</a></td>
+									<td><a href="/mysite/board?a=delete&no=${vo.no}" class="del">삭제</a></td>
 								</tr>
 							</c:forEach>
 							

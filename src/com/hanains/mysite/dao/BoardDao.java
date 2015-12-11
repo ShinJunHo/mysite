@@ -126,7 +126,7 @@ public class BoardDao {
 			}
 		}
 	}
-	public BoardVo view(BoardVo vo){
+	public BoardVo getView(Long no){
 		BoardVo viewVo=null;
 		Connection conn =null;
 		PreparedStatement pstmt= null;
@@ -137,11 +137,28 @@ public class BoardDao {
 			String sql="select no, title, content, member_no from board where no=?";
 			pstmt =conn.prepareStatement(sql);
 			//4.binding.
-			pstmt.setLong(1, vo.getNo());
+			pstmt.setLong(1,no);
 			
 			//5.SQL 실행
 			rs= pstmt.executeQuery();
+
+			//6.조회수 증가.
+			String sql2="update board set view_cnt = view_cnt + 1 where no=?";
+			pstmt = conn.prepareStatement(sql2);
+			pstmt.setLong(1, no);
+			pstmt.executeUpdate();
+
 			while(rs.next()){
+				Long bno = rs.getLong(1);
+				String btitle = rs.getString(2);
+				String bcontent = rs.getString(3);
+				Long bmember_no =rs.getLong(4);
+				
+				viewVo = new BoardVo();
+				viewVo.setNo(bno);
+				viewVo.setTitle(btitle);
+				viewVo.setContent(bcontent);
+				viewVo.setMember_no(bmember_no);
 				
 			}
 			
@@ -152,6 +169,67 @@ public class BoardDao {
 		return viewVo;
 	}
 	public void delete(BoardVo vo){
+		Connection conn = null;
+		PreparedStatement pstmt =null;
+		try{
+			conn = getConnection();
+			
+			String sql="delete from board where no = ?";
+
+			pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setLong(1,vo.getNo());
+			pstmt.executeUpdate();
 		
+		}catch(SQLException ex){
+			System.out.println("에러 : "+ex);
+		}finally{
+			try{
+				if(pstmt != null){
+					pstmt.close();
+				}if(conn != null){
+					conn.close();
+				}
+			}catch(SQLException ex){
+				ex.printStackTrace();
+			}
+		}
+	}
+	
+	public void update(BoardVo vo){
+		Connection conn =null;
+		PreparedStatement pstmt =null;
+		try{
+			//1.DB connection;
+			conn = getConnection();
+			
+			//2.prepare statement
+			String sql="update board set title=?,content=?where no=?";
+			
+			//3.statement 준비
+			pstmt=conn.prepareStatement(sql);
+			//4.binding 
+			pstmt.setString(1,vo.getTitle());
+			pstmt.setString(2,vo.getContent());
+			pstmt.setLong(3,vo.getNo());
+			
+			//5.SQL실행
+			pstmt.executeUpdate();
+			
+		}catch( SQLException ex){
+			System.out.println("sql Error: "+ex);
+			ex.printStackTrace();
+		}finally{
+			try{
+			if(pstmt !=null){
+				pstmt.close();
+			}
+			if(conn != null){
+				conn.close();
+			}
+			}catch(SQLException ex){
+				ex.printStackTrace();
+			}
+		}
 	}
 }
